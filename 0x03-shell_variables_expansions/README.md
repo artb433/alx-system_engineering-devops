@@ -1,1 +1,1 @@
-This repository is for shell basics
+This repository is for shell variables
