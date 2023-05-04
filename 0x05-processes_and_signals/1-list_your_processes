@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# Must show all processes, for all users, including those which might have a TTY
-#   Display in a user-oriented format
-#+  Show process hierarchy
+# display a list of currently running processes
 
-ps -auxf
+# run the command to get running processes
+ps auxf

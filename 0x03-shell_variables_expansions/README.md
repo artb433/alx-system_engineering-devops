@@ -1,1 +1,1 @@
-#0x03-shell_variables_expansions
+This is my shell variables directory

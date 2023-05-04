@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
-# Displays the contents of the current directory in list format.
-#   Only displays the part of the name after the first dash. 
+# print the contents of the current directory
+#+ print characters in name only after the first "-"
 
-list=$(ls)
-for i in $list; do
-  echo "$i" | cut -d '-' -f2
+for file in ./*
+do
+	# print file names
+	#+ first cut pipe trims characters before (including) '-'
+	#+ second cut pipe trims characters before (including) '/'
+	#+ -f2- specifies the second field - the field after a match
+
+	echo "$file" | cut -d '-' -f2- | cut -d '/' -f2-
 done

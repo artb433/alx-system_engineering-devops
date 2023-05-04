@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
-# A script that displays its own PID
+# this script displays its own process identification number (PID)
 
-echo $$
+my_pid=$$
+echo "$my_pid"
