@@ -1,1 +1,1 @@
-Printing current directory
+shell elementery
