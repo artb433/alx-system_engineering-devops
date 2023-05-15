@@ -1,13 +1,10 @@
 #!/usr/bin/env bash
-# print "Best School" 10 times using the until loop
+# A script that displays Best School 10 times using until
 
-i=0
+number_count=1
 
-until [ $i -gt  9 ]
+until [ $number_count -gt 10 ]
 do
-	# print best school
-	echo "Best School"
-
-	# increment the value of i
-	i=$((i + 1))
+    echo "Best School"
+    ((number_count++))
 done
