@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-# Stop me if you can
+# Kills the 4-to_infinity_and_beyond process.
 
 pkill -f 4-to_infinity_and_beyond
