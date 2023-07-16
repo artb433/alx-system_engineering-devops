@@ -1,10 +1,9 @@
-# A puppet manifest that creates a file school in /tmp.
-# The file (School) has permissions 0744, belonging to the user and group
-# www-data.
+# Creates a file
 file { '/tmp/school':
-  ensure  => present,
+  ensure  => file,
+  path    => '/tmp/school',
   mode    => '0744',
   owner   => 'www-data',
   group   => 'www-data',
-  content => 'I love Puppet',
+  content => 'I love Puppet'
 }

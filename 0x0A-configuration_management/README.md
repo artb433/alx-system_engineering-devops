@@ -1,46 +1,44 @@
-# Configuration management
+# 0x0A. Configuration management
 
-![configuration_management](https://wac-cdn.atlassian.com/dam/jcr:f4635478-48a1-45d1-9b2f-43d14b2666ba/Configuration-management-tools-2x.png?cdnVersion=690)
+## Resource
 
-> Configuration management is a systems engineering process for establishing consistency of a product’s attributes throughout its life.
+- [Intro to Configuration Management](https://www.digitalocean.com/community/tutorials/an-introduction-to-configuration-management)
+- [Puppet resource type: file](https://puppet.com/docs/puppet/5.5/types/file.html) (*Check "Resource types" for all manifest types in the left menu*)
+- [Puppet’s Declarative Language: Modeling Instead of Scripting](https://puppet.com/blog/puppets-declarative-language-modeling-instead-of-scripting/)
+- [Puppet lint](http://puppet-lint.com/)
+- [Puppet emacs mode](https://github.com/voxpupuli/puppet-mode)
+- [Puppet CookBook](https://www.puppetcookbook.com/)
 
-Puppet is a tool that helps you manage and automate the configuration of servers. When you use Puppet, you define the desired state of the systems in your infrastructure that you want to manage.
+## Installing `puppet` and `puppet-lint`
 
-![puppet](https://miro.medium.com/max/720/1*j0RHN3oXzOfXWl7XeLzxZw.webp)
+```sh
+# installing puppet and puppet-lint
+wget https://apt.puppet.com/puppet7-release-focal.deb && \
+    dpkg -i puppet7-release-focal.deb && \
+    apt-get update && \
+    apt-get install puppet-agent puppet-lint -y
 
-Obviously writing Puppet code for your infrastructure requires an investment of time and energy, but in the long term, it is for sure a must-have.
+# confirming installation
+puppet -V
+puppet-lint -v
 
-## Project Requirements
-
-- All your files will be interpreted on `Ubuntu 20.04 LTS`
-- All your files should end with a new line
-- A __README.md__ file at the root of the folder of the project is mandatory
-- Your Puppet manifests must pass `puppet-lint version 2.1.1` without any errors
-- Your Puppet manifests must run without error
-- Your Puppet manifests first line __must be a comment__ explaining what the Puppet manifest is about
-- Your Puppet manifests files must end with the extension __.pp__
-
-## Installing puppet and puppet-lint on ubuntu
-
-### A video says it all
-__Watch the video below to get a full grasp about tackling the project__
-
-_Click the play video to watch video_ [Play video](https://youtu.be/YJyzEnXSsc8)
-
-### Commands on Terminal
-```bash
-
-$ apt-get update && upgrade -y
-
-$ sudo apt-get install -y ruby=1:2.7+1 --allow-downgrades
-
-$ sudo apt-get install -y ruby-augeas
-
-$ sudo apt-get install -y ruby-shadow
-
-$ sudo apt-get install -y puppet
-
-#installs puppet linter
-$ gem install puppet-lint
+# If you get an error saying puppet command not found, source the path
+source /etc/profile.d/puppet-agent.sh
 ```
-__Follow the above instructions to install puppet and puppet-linter then watch the video to enable you understand how to get started with the task__
+
+## Tasks
+
+<details>
+<summary><a href="./0-create_a_file.pp">0. Create a file</a></summary><br>
+<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/NM2k46hX/image.png' border='0' alt='image'/></a>
+</details>
+
+<details>
+<summary><a href="./1-install_a_package.pp">1. Install a package</a></summary><br>
+<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/PqVvKj7c/image.png' border='0' alt='image'/></a>
+</details>
+
+<details>
+<summary><a href="./2-execute_a_command.pp">2. Execute a command</a></summary><br>
+<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/CxZFC13P/image.png' border='0' alt='image'/></a>
+</details>
