@@ -1,138 +1,219 @@
-# 0x14. MySQL 
+# 0x14-mysql
 
-<p align="center">
-  <img src="https://s3.amazonaws.com/intranet-projects-files/holbertonschool-sysadmin_devops/280/KkrkDHT.png"
-</p>
+![mysql](https://www.simplilearn.com/ice9/free_resources_article_thumb/difference_between_sql_and_mysql.jpg)
 
-## Resource
+The MySQL server provides a database management system with querying and connectivity capabilities, as well as the ability to have excellent data structure and integration with many different platforms.
 
-- [What is a database](https://searchdatamanagement.techtarget.com/definition/database)
-- [What is a database primary/replicate cluster](https://www.digitalocean.com/community/tutorials/how-to-choose-a-redundancy-plan-to-ensure-high-availability#sql-replication)
-- [MySQL primary/replicate setup](https://www.digitalocean.com/community/tutorials/how-to-set-up-replication-in-mysql)
+## Needed Knowledge
+
+- [What is a primary-replica cluster](https://www.digitalocean.com/community/tutorials/how-to-choose-a-redundancy-plan-to-ensure-high-availability#sql-replication)
+
+- [MySQL primary replica setup](https://www.digitalocean.com/community/tutorials/how-to-set-up-replication-in-mysql)
+
 - [Build a robust database backup strategy](https://www.databasejournal.com/ms-sql/developing-a-sql-server-backup-strategy/)
-- [Privileges Provided by MySQL](https://dev.mysql.com/doc/refman/8.0/en/privileges-provided.html#priv_replication-client) (***Replication Client***)
-- [Creating User for Replication](https://dev.mysql.com/doc/refman/8.0/en/replication-howto-repuser.html)
-- [Setting up replicas](https://dev.mysql.com/doc/refman/5.7/en/replication-setup-replicas.html) (***MySQL 5.7.x***)
 
-## Tasks
+- `mysqldump`
 
-<details>
-<summary>0. Install MySQL</summary><br>
-<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/wMPwtg5K/image.png' border='0' alt='image'/></a>
-</details>
+## Learning Objectives
 
-<details>
-<summary>1. Let us in!</summary><br>
+- What is the main role of a database
+- What is a database replica
+- What is the purpose of a database replica
+- Why database backups need to be stored in different physical locations
+- What operation should you regularly perform to make sure that your database backup strategy actually works
 
-<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/zB1QFncd/image.png' border='0' alt='image'/></a>
-```sh
+## Project Requirements
+
+- Allowed editors: `vi`, `vim`, `emacs`
+- All your files will be interpreted on `Ubuntu 16.04 LTS`
+- All your files should end with a new line
+- A README.md file, at the root of the folder of the project, is mandatory
+- All your Bash script files must be executable
+- Your Bash script must pass Shellcheck __(version 0.3.7-5~ubuntu16.04.1 via apt-get)__ without any error
+- The first line of all your Bash scripts should be exactly `#!/usr/bin/env bash`
+- The second line of all your Bash scripts should be a comment explaining what is the script doing
+
+## Installation Guide for mysql 5.7.*
+
+- First go to site [dev.mysql.com](https://dev.mysql.com/doc/refman/5.7/en/checking-gpg-signature.html) and copy the PGP PUBLIC KEY just immediately under the _Notice_ section to your clipboard.
+
+- Create a new file in your terminal with a .key extension and paste the PGP PUB KEY copied to clipboard.
+- Then do the following
+
+```bash
+$ sudo apt-key add name_of_file.key
+OK
+
+# adding it to the apt repo
+$ sudo sh -c 'echo "deb http://repo.mysql.com/apt/ubuntu bionic mysql-5.7" >> /etc/apt/sources.list.d/mysql.list'
+
+# updating the apt repo to add the url i added earlier
+$ sudo apt-get update
+
+# now check your available versions
+$ sudo apt-cache policy mysql-server
+mysql-server:
+  Installed: (none)
+  Candidate: 8.0.31-0ubuntu0.20.04.2
+  Version table:
+     8.0.31-0ubuntu0.20.04.2 500
+        500 http://us-east-1.ec2.archive.ubuntu.com/ubuntu focal-updates/main amd64 Packages
+     8.0.31-0ubuntu0.20.04.1 500
+        500 http://security.ubuntu.com/ubuntu focal-security/main amd64 Packages
+     8.0.19-0ubuntu5 500
+        500 http://us-east-1.ec2.archive.ubuntu.com/ubuntu focal/main amd64 Packages
+     5.7.40-1ubuntu18.04 500
+        500 http://repo.mysql.com/apt/ubuntu bionic/mysql-5.7 amd64 Packages
+
+# Now am installing mysql 5.7.*
+$ sudo apt-get install -f mysql-client=5.7* mysql-community-server=5.7* mysql-server=5.7* -y
+```
+## Project Task
+
+### Creating a user and Granting Priviledges in mysql
+```mysql
+$ mysql -root -p
+Password:	/* Type root password
+
 mysql> CREATE USER 'holberton_user'@'localhost' IDENTIFIED BY 'projectcorrection280hbtn';
-mysql> GRANT REPLICATION CLIENT ON *.* to 'holberton_user'@'localhost';
+
+mysql> GRANT GRANT REPLICATION CLIENT ON *.* TO 'holberton_user'@'localhost';
+
 mysql> FLUSH PRIVILEGES;
 ```
 
-</details>
+### Creating Database, Tables and adding Data to the Tables
 
-<details>
-<summary>2. If only you could see what I've seen with your eyes</summary><br>
+```mysql
 
-<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/sgDm766T/image.png' border='0' alt='image'/></a>
-```sh
-mysql> CREATE DATABASE tyrell_corp;
-mysql> USE tyrell_corp;
-mysql> CREATE TABLE nexus6 (id INT, name VARCHAR(256));
-mysql> INSERT INTO nexus6 (id, name) VALUES ('1', 'Leon');
-mysql> GRANT SELECT ON tyrell_corp.nexus6 TO 'holberton_user'@'localhost';
+mysql> CREATE DATABASE db_name_;
+
+-- To verify if db is created
+mysql> SHOW DATABASES;
+
+mysql> USE db_name;
+
+mysql> CREATE TABLE table_name (
+    -> col_1 data_type,
+    -> col_2 data_type);
+-- continue adding more coloums to your taste for me i just added two coloumns
+
+mysql> INSERT INTO table_name VALUES (val_1, val_2);
+
+-- Verify if data was added succesfully do
+mysql> SELECT col_1, col_2 FROM tb_name;
 ```
 
-</details>
+### Setting Up MySQL Replication
 
-<details>
-<summary>3. Quite an experience to live in fear, isn't it?</summary><br>
+- First create replication user and grant replication priviledge ( best practice).
 
-<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/D0CmW3vT/image.png' border='0' alt='image'/></a>
-```sh
-msql> CREATE USER 'replica_user'@'%' IDENTIFIED BY 'password';
-mysql> GRANT SELECT ON mysql.user TO 'holberton_user'@'localhost';
+```mysql
+
+mysql> CREATE USER 'replica_user'@'%' IDENTIFIED BY 'replica_user_pwd';
+
 mysql> GRANT REPLICATION SLAVE ON *.* TO 'replica_user'@'%';
+
+mysql> FLUSH PRIVILEGES;
+
+-- to verify
+mysql> SELECT user, Repl_slave_priv FROM mysql.user;
+
+mysql> exit
+```
+- Next up you go to the /etc/mysql/mysql.conf.d/mysqld.cnf and comment the bind address and then add this lines to it
+
+```bash
+# By default we only accept connections from localhost
+# bind-address = 127.0.0.1
+server-id = 1
+log_bin = /var/log/mysql/mysql-bin.log
+binlog_do_db = db_name
+```
+- Then you enable incoming connection to port 3306 and restart mysql-server
+```bash
+
+$ sudo ufw allow from 'replica_server_ip' to any port 3306
+
+$ sudo service mysql restart
+```
+- Now log back in to mysql-server to lock db and prepare binary file for replication.
+
+```bash
+$ mysql -uroot -p
+password:
+```
+```mysql
+mysql> 
+
+mysql> FLUSH TABLES WITH READ LOCK;
+
+mysql> SHOW MASTER STATUS;
+
++------------------+----------+--------------+------------------+-------------------+
+| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |
++------------------+----------+--------------+------------------+-------------------+
+| mysql-bin.000001 |      149 | db           |                  |                   |
++------------------+----------+--------------+------------------+-------------------+
+
+```
+_Take note of the binary log and the position, jot it down or you leave this window open and you open another window to continue_
+
+- you then export the db from myql-server to local machine and then copy this db to replica machine
+
+```bash
+$ mysqldump -uroot -p db_name > export_db_name.sql
+
+$ scp -i _idenetity_file_ export_db_name.sql user@machine_ip:location
+```
+- Then ssh to replica machine ip_adress to import this tables to replica mysql-server
+
+```bash
+
+$ mysql -uroot -p 
+password:
+
+
+mysql> CREATE DATABASE db_name;
+
+mysql>exit
+bye
+
+$ mysql -uroot p db_name < export_db_name.sql
+password:
+
+# Now edit the config file in /etc/mysql/mysql.conf.d/mysqld.cnf and then reload mysql-server
+
+```bash
+
+server-id = 2
+log_bin = /var/log/mysql/mysql-bin.log
+binlog_do_db = db_name_from_master_mysql-server
+relay_log = /var/log/mysql/mysql-relay-bin.log
+
+$ sudo service mysql restart
 ```
 
-</details>
+- Login to mysql server in replica to configure replication
 
-<details>
-<summary>4. Setup a Primary-Replica infrastructure using MySQL</summary><br>
+```bash
 
-<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/MKBBLGVn/09e83e914f0d6865ce320a47f2f14837a5b190b6.gif' border='0' alt='09e83e914f0d6865ce320a47f2f14837a5b190b6'/></a>
-<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/9fkyDg7k/image.png' border='0' alt='image'/></a>
-<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/Jhhb4DpP/image.png' border='0' alt='image'/></a>
-<a href='https://postimg.cc/4nLx8dpx' target='_blank'><img src='https://i.postimg.cc/28mLSL6h/image.png' border='0' alt='image'/></a>
+$ mysql -uroot -p
+password:
 
-+ [MySQL primary configuration](./4-mysql_configuration_primary)
-+ [MySQL replica configuration](./4-mysql_configuration_replica)
 
-</details>
-
-<details>
-<summary>5. MySQL backup</summary><br>
-
-[![IMAGE ALT TEXT HERE](https://i.postimg.cc/3NtKg0gR/verizon.jpg)](https://www.youtube.com/watch?v=ANU-oSE5_hU)
-<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/J7YV5LfG/image.png' border='0' alt='image'/></a>
-
-```sh
-ubuntu@03-web-01:~$ ls
-5-mysql_backup
-ubuntu@03-web-01:~$ ./5-mysql_backup mydummypassword
-backup.sql
-ubuntu@03-web-01:~$ ls
-01-03-2017.tar.gz  5-mysql_backup  backup.sql
-ubuntu@03-web-01:~$ more backup.sql
--- MySQL dump 10.13  Distrib 5.7.25, for debian-linux-gnu (x86_64)
---
--- Host: localhost    Database:
--- ------------------------------------------------------
--- Server version   5.7.25-0ubuntu0.14.04.1
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Current Database: `tyrell_corp`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `tyrell_corp` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `tyrell_corp`;
-
---
--- Table structure for table `nexus6`
---
-
-DROP TABLE IF EXISTS `nexus6`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `nexus6` (
-  `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(30) NOT NULL,
-  `lastname` varchar(30) NOT NULL,
-  `email` varchar(50) DEFAULT NULL,
-  `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-ubuntu@03-web-01:~$
-ubuntu@03-web-01:~$ file 01-03-2017.tar.gz
-01-03-2017.tar.gz: gzip compressed data, from Unix, last modified: Wed Mar  1 23:38:09 2017
-ubuntu@03-web-01:~$
+mysql>
 ```
+```mysql
 
-+ [Backup script](./5-mysql_backup)
+mysql> CHANGE MASTER TO
+    -> MASTER_HOST='source_host_name',
+    -> MASTER_USER='replication_user_name',
+    -> MASTER_PASSWORD='replication_password',
+    -> MASTER_LOG_FILE='recorded_log_file_name',
+    -> MASTER_LOG_POS=recorded_log_position;
 
-</details>
+-- Then you start slave
+mysql> START SLAVE;
+```
+__That's it you've configured replication on mysql, do reach out for any further assistance__
