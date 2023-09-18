@@ -1,23 +1,33 @@
-# Load balancer
-![load_balancer](https://miro.medium.com/max/720/0*CCK15OF3DizmOITk)
+# Load balancer :computer:
 
-> Let’s improve our web stack so that there is redundancy for our web servers. This will allow us to be able to accept more traffic by doubling the number of web servers, and to make our infrastructure more reliable. If one web server fails, we will still have a second one to handle requests.
+In this project, I continued to build up the configuration of the web server
+issued in project 0x0B. I was issued two additional servers, one to replicate
+the Nginx configuration of my original server.
 
-For this project, you will need to write Bash scripts to automate your work. All scripts must be designed to configure a brand new Ubuntu server to match the task requirements.
+## Tasks :page_with_curl:
 
-## Concepts
+* **0. Double the number of webservers**
+  * [0-custom_http_response_header](./0-custom_http_response-header): Bash
+  script that installs and configures Nginx on a server with a custom HTTP
+  response header.
+    * The name of the HTTP header is `X-Served-By`.
+    * The value of the HTTP header is the hostname of the server.
 
-- HTTP Header
-- Debian/UbuntuHAProxy Packages
-- Introduction to Load Balancing.
+* **1. Install your load balancer**
+  * [1-install_load_balancer](./1-install_load_balancer): Bash script that
+  installs and configures HAproxy version 1.5 on a server.
+    * Enables management via the init script.
+    * Requests are distributed using a round-robin algorithm.
 
-## Requirements
+## Resources
+****
+<a href="https://youtu.be/C2NLPQTvO9M" target="blank">Load Balancer</a>
 
-- Allowed editors: `vi`, `vim`, `emacs`
-- All your files will be interpreted on `Ubuntu 16.04 LTS`
-- All your files should end with a new line
-- A __README.md__ file, at the root of the folder of the project, is mandatory
-- All your Bash script files __must be executable__
-- Your Bash script must pass `Shellcheck (version 0.3.7)` without any error
-- The first line of all your Bash scripts should be exactly `#!/usr/bin/env bash`
-- The second line of all your Bash scripts should be a comment explaining what is the script doing.
+---
+
+<h3 align="left">Connect with me:</h3>
+<p align="left">
+<a href="https://twitter.com/mpfanawagacha" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/twitter.svg" alt="Manuel Dinis Júnior" height="30" width="40" /></a>
+<a href="https://linkedin.com/in/manuel-dinis-junior" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="agboola-olawale-damilola-7b2132246" height="30" width="40" /></a>
+<a href="https://stackoverflow.com/users/21437069" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/stack-overflow.svg" alt="19747131" height="30" width="40" /></a>
+<a href="https://instagram.com/manueldinisjunior" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="Manuel Dinis Júnior" height="30" width="40" /></a>
